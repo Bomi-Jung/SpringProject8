@@ -1,5 +1,7 @@
 package com.example.demo.service;
 
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,6 +23,15 @@ public class BoardServiceTest {
 		
 		System.out.println("새로운 게시물 번호: " + no);
 		
+	}
+	
+	@Test
+	public void 게시물목록조회() {
+		List<BoardDTO> list = service.getList();
+		
+		for(BoardDTO dto : list) {
+			System.out.println(dto);
+		}
 	}
 
 }
