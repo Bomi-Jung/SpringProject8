@@ -34,6 +34,19 @@
 
 		</table>
 
+		<script th:inline="javascript">
+		 
+			$(document).ready(
+				function(){
+					var msg = [[${msg}]];
+					
+					if(msg != null){
+					alert(msg + "번 글이 등록되었습니다.");
+				}
+					}
+				);
+		</script>
+
 	</th:block>
 
 </th:block>
