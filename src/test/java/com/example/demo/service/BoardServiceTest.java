@@ -42,9 +42,14 @@ public class BoardServiceTest {
 	
 	@Test
 	public void 게시물수정() {
-		BoardDTO dto = service.read(2);
+		BoardDTO dto = service.read(3);
 		dto.setContent("내용수정됨");
 		service.modify(dto);
 	}
 
+	@Test
+	public void 게시물삭제() {
+		int result = service.remove(13);
+		System.out.println(result);
+	}
 }
