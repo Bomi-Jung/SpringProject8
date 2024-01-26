@@ -1,11 +1,14 @@
 package com.example.demo.repository;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import com.example.demo.entity.Board;
 
@@ -15,45 +18,48 @@ public class BoardRepositoryTest {
 	@Autowired
 	BoardRepository repository;
 	
+	
 	@Test
-	void 게시물등록() {
+	public void 게시물30개추가() {
 		
-		Board board = Board.builder().title("1번글").content("내용입니다").writer("둘리").build();
+		for(int i =1; i<= 30; i++) {
+		Board board = Board.builder().title(i + "번글")
+				.content("안녕하세요").writer("둘리").build();
 		
 		repository.save(board);
-		
-	}
 	
-	@Test
-	void 게시물목록조회() {
-		List<Board> list = repository.findAll();
-		
-		for(Board board : list ) {
-			System.out.println(board);
-		}
-		
-	}
-	
-	@Test
-	void 게시물단건조회() {
-		Optional<Board> result = repository.findById(2);
-		if(result.isPresent()) {
-			Board board = result.get();
-			System.out.println(board);
 		}
 	}
 	
 	@Test
-	void 게시물수정() {
-		Optional<Board> result = repository.findById(2);
-		Board board = result.get();
-		board.setContent("내용수정");
-		repository.save(board);
+	public void 페이지테스트() {
 		
+		//1페이지에 10개 게시글
+		Pageable pageable = PageRequest.of(0, 10);
+		
+		Page<Board> result = repository.findAll(pageable);
+		//게시물 리스트 + 페이지 정보
+		System.out.println(result);
+		
+		List<Board> list = result.getContent();
+		//게시물 리스트 
+		System.err.println(list);
 	}
+	
 	@Test
-	void 게시물삭제() {
-		repository.deleteById(1);
+	public void 정렬조건추가하기() {
+		//
+		Sort sort = Sort.by("no").descending();
+		
+		Pageable pageable = PageRequest.of(2, 10,sort);
+		
+		Page<Board> result = repository.findAll(pageable);
+		
+		List<Board> list = result.getContent();
+		
+		System.out.println(list);
 	}
+	
 	
 }
+		

@@ -34,6 +34,29 @@
 
 		</table>
 
+		<ul class="pagination h-100 justify-content-center align-items-center">
+			<!-- 전달받은 페이지 정보로 번호 목록 만들기  -->
+			<th:block th:each="page : ${#numbers.sequence(1, list.totalPages)}">
+
+
+				<th:block th:if="${list.number+1 == page}">
+					<li class="page-item active"><a class="page-link" th:href="@{/board/list(page =${page})}">[[${page}]]</a>
+					</li>
+				</th:block>
+
+			
+
+			<th:block th:unless="${list.number+1 == page}">
+				<li class="page-item "><a class="page-link" th:href="@{/board/list(page =${page})}">[[${page}]]</a>
+				</li>
+			</th:block>
+			</th:block>
+
+		</ul>
+
+
+
+
 		<script th:inline="javascript">
 		 
 			$(document).ready(
@@ -55,11 +78,11 @@
 <!--전달받은 값을 모달창으로 출력-->
 <!--서버에서 전달한 처리결과를 msg변수에 저장-->
 <!-- 글번호가 있는지 확인 -->
-<!--<script th:inline="javascript">
+<script th:inline="javascript">
 			$(document).ready(function(){
 			  var msg = [[${msg}]];
 			  if(msg != null){
 				  alert(msg + "번 글이 등록되었습니다.");
 			  }
 			});
-</script>-->
+</script>

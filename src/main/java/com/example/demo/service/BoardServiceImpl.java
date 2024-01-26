@@ -1,11 +1,11 @@
 package com.example.demo.service;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.dto.BoardDTO;
@@ -32,20 +32,6 @@ public class BoardServiceImpl implements BoardService {
 		return newNo;
 	}
 
-	@Override
-	public List<BoardDTO> getList() {
-
-		// 데이터 베이스에서 게시물 목록을 가져오기
-		List<Board> result = repository.findAll();
-		// 리스트 생성
-		List<BoardDTO> list = new ArrayList<>();
-
-		list = result.stream()// 리스트에서 스트림 생성
-				.map(entity -> entityToDto(entity))// 중산연산으로 엔티티를 dto로 변환
-				.collect(Collectors.toList()); //
-
-		return list;
-	}
 
 	@Override
 	public BoardDTO read(int no) {
@@ -88,5 +74,25 @@ public class BoardServiceImpl implements BoardService {
 			return 0; //실패
 		}
 		}
+
+
+	//목록조회 메소드 
+	@Override
+	public Page<BoardDTO> getList(int pageNumber) {
+
+		//페이지 번호를 인덱스로 변경
+		int pageNum = (pageNumber == 0) ? 0 : pageNumber -1;
+		
+		//페이지번호, 개수, 정렬방식을 입력하여 페이지 정보 생성
+		PageRequest pageable = PageRequest.of(pageNum, 10, Sort.by("no").descending());
+		
+		//게시물 목록 조회
+		Page<Board> entityPage = repository.findAll(pageable);
+		
+		//스트림을 사용하여 엔티티 리스트를 DTO 리스트로 변환
+		Page<BoardDTO> dtoPage = entityPage.map(entity -> entityToDto(entity));
+	
+		return dtoPage;
+	}
 	
 }

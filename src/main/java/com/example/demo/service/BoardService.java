@@ -1,6 +1,6 @@
 package com.example.demo.service;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
 
 import com.example.demo.dto.BoardDTO;
 import com.example.demo.entity.Board;
@@ -11,7 +11,7 @@ public interface BoardService {
 	int register(BoardDTO dto);
 	
 	//게시물 목록 조회
-	List<BoardDTO> getList();
+	Page<BoardDTO> getList(int pageNumber);
 	
 	//게시물 상세조회
 	BoardDTO read(int no);
