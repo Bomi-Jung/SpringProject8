@@ -15,10 +15,10 @@ import lombok.Getter;
 @Getter
 public abstract class BaseEntity {
 	
-	@CreatedDate
+	@CreatedDate // 인스턴스가 생성되는 것을 감지하여 현재시간을 저장
 	LocalDateTime regDate;
 	
-	@LastModifiedDate
+	@LastModifiedDate // 인스턴스가 수정되는 것을 감지하여 현재시간을 저장
 	LocalDateTime modDate;
 
 }

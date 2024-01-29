@@ -28,20 +28,18 @@ public class BoardController {
 
 	// 목록화면
 	@GetMapping("/list")
-	public void list(@RequestParam(defaultValue = "0", name="page")int page, Model model) {
-		//게시물 목록 조회
+	public void list(@RequestParam(defaultValue = "0", name = "page") int page, Model model) {
+		// 게시물 목록 조회
 		Page<BoardDTO> list = service.getList(page);
-		
-		//화면에 결과 데이터 전달
+
+		// 화면에 결과 데이터 전달
 		model.addAttribute("list", list);
-		
+
 		System.out.println("전체 페이지 수: " + list.getTotalPages());
 		System.out.println("전체 게시물 수: " + list.getTotalElements());
 		System.out.println("현재 페이지 번호: " + (list.getNumber() + 1));
 		System.out.println("페이지에 표시할 게시물 수: " + list.getNumberOfElements());
-		
-		
-		
+
 	}
 
 	// 등록화면
@@ -64,9 +62,11 @@ public class BoardController {
 
 	// 상세화면
 	@GetMapping("/read")
-	public void read(@RequestParam(name = "no") int no, Model model) {
+	public void read(@RequestParam(name = "no") int no, @RequestParam(defaultValue = "0", name = "page") int page,
+			Model model) {
 		BoardDTO dto = service.read(no);
 		model.addAttribute("dto", dto);
+		model.addAttribute("page", page);
 	}
 
 	// 수정화면
@@ -91,7 +91,7 @@ public class BoardController {
 
 	// 삭제처리
 	@PostMapping("/remove")
-	public String removePost(@RequestParam(name = "no")int no) {
+	public String removePost(@RequestParam(name = "no") int no) {
 		service.remove(no);
 		return "redirect:/board/list";
 	}

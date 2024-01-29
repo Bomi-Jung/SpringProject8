@@ -25,7 +25,7 @@
 			<tbody>
 
 				<tr th:each="dto : ${list}">
-					<th><a th:href="@{/board/read(no=${dto.no})}">[[${dto.no}]]</a></th>
+					<th><a th:href="@{/board/read(no=${dto.no}, page=${list.number + 1})}">[[${dto.no}]]</a></th>
 					<td>[[${dto.title}]]</td>
 					<td>[[${dto.writer}]]</td>
 					<td>[[${#temporals.format(dto.regDate,'yyyy/MM/dd')}]]</td>

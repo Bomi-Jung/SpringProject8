@@ -17,6 +17,24 @@ public class BoardServiceTest {
 	BoardService service;
 	
 	@Test
+	public void 게시물조회() {
+		BoardDTO dto = service.read(2);
+		System.out.println(dto);
+	}
+	
+	@Test
+	public void 게시물등록() {
+		//회원 객체 생성 
+		BoardDTO dto = BoardDTO.builder()
+				.title("1번글")
+				.content("내용입니다")
+				.writer("user2")
+				.build();
+		
+		service.register(dto);
+	}
+	
+	@Test
 	public void  게시물목록조회() {
 		//첫번째 페이지 조회
 		Page<BoardDTO> page = service.getList(1);
@@ -26,4 +44,5 @@ public class BoardServiceTest {
 			System.out.println(dto);
 		}
 	}
+	
 }
