@@ -20,11 +20,7 @@ public class BoardController {
 	@Autowired
 	BoardService service;
 
-	// 메인화면
-	@GetMapping("/main")
-	public void main() {
 
-	}
 
 	// 목록화면
 	@GetMapping("/list")

@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-<th:block th:replace="~{/layout/basic :: setContent(~{this::content})}">
+
+<th:block th:replace="~{/layout/basic :: setContent(~{this::content} )}">
 
 	<th:block th:fragment="content">
 
 		<h1>Member List Page</h1>
-
-
 
 		<table class="table table-striped">
 			<thead>
@@ -16,15 +15,25 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:each="dto: ${list}">
+				<!-- 회원 정보 반복처리 -->
+				<!--
+				1. 컨트롤러에서 전달받은 리스트만 출력
+				2. 행을 만드는 엘리먼트에 반복문 처리. 나머지 코드는 삭제
+				3. dto 변수값만 출력
+				4. 가짜데이터를 변수로 처리
+				-->
 
-					
-					
-					<th>
-					<a href="@{/member/read(id = ${dto.id}, page= ${list.number + 1})}">
-					[[${dto.id}]]</a></th>
+
+
+				<tr th:each="dto : ${list}">
+
+
+
+					<th><a
+						th:href="@{/member/read(id = ${dto.id}, page= ${list.number + 1})}">
+							[[${dto.id}]] </a></th>
 					<td>[[${dto.name}]]</td>
-					<td>[[${#temporals.format(dto.regDate,'yyyy/MM/dd')}]]</td>
+					<td>[[${#temporals.format(dto.regDate, 'yyyy/MM/dd')}]]</td>
 				</tr>
 
 			</tbody>
